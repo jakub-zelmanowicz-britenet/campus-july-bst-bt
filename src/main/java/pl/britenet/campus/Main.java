@@ -3,6 +3,9 @@ package pl.britenet.campus;
 import pl.britenet.campus.command.Command;
 import pl.britenet.campus.command.CommandService;
 import pl.britenet.campus.command.HelloCommand;
+import pl.britenet.campus.command.RetrieveProductsCommand;
+import pl.britenet.campus.database.DatabaseService;
+import pl.britenet.campus.service.ProductService;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -12,8 +15,12 @@ public class Main {
     public static void main(String[] args) {
         boolean isRunning = true;
 
+        DatabaseService databaseService = new DatabaseService();
+        ProductService productService = new ProductService(databaseService);
+
         CommandService commandService = new CommandService();
         commandService.registerCommand(new HelloCommand());
+        commandService.registerCommand(new RetrieveProductsCommand(productService));
 
         Scanner scanner = new Scanner(System.in);
 
