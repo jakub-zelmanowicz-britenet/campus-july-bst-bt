@@ -8,6 +8,10 @@ public class Product {
     private String description;
     private double price;
 
+    private int categoryId;
+
+    private Category category;
+
     public Product(){
         this.id = Constants.INVALID_ID;
     }
@@ -42,5 +46,21 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

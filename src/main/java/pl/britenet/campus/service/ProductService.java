@@ -1,6 +1,7 @@
 package pl.britenet.campus.service;
 
 import pl.britenet.campus.database.DatabaseService;
+import pl.britenet.campus.object.Category;
 import pl.britenet.campus.object.Product;
 
 import java.sql.SQLException;
@@ -17,14 +18,20 @@ public class ProductService {
     }
 
     public List<Product> getProducts() {
-        return this.databaseService.performSQL("SELECT * FROM product", resultSet -> {
+        return this.databaseService.performSQL("SELECT p.id AS productId, p.name AS productName, p.description, p.price, c.id AS categoryId, c.name AS categoryName FROM product p INNER JOIN category c ON p.category = c.id",
+                resultSet -> {
+
             List<Product> productList = new ArrayList<>();
             try {
                 while (resultSet.next()) {
-                    Product product = new Product(resultSet.getInt("id"));
-                    product.setName(resultSet.getString("name"));
+                    Category category = new Category(resultSet.getInt("categoryId"));
+                    category.setName(resultSet.getString("categoryName"));
+
+                    Product product = new Product(resultSet.getInt("productId"));
+                    product.setName(resultSet.getString("productName"));
                     product.setDescription(resultSet.getString("description"));
                     product.setPrice(resultSet.getDouble("price"));
+                    product.setCategory(category);
                     productList.add(product);
                 }
             } catch (SQLException exception) {

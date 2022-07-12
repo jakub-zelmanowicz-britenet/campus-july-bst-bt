@@ -19,7 +19,7 @@ public class RetrieveProductsCommand extends Command {
     public void execute() {
         List<Product> productList = this.productService.getProducts();
         productList.forEach( product -> {
-            System.out.println(product.getName());
+            System.out.println(product.getName() + " category: " + product.getCategory().getName());
         } );
     }
 }
